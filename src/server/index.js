@@ -15,6 +15,9 @@ import webpackHotMiddleware from 'webpack-hot-middleware'
 
 import config from '../../build/webpack.dev.conf'
 
+// 引入接口文件
+import userApi from './api/user'
+
 const app = express()
 
 // view engine setup
@@ -41,10 +44,15 @@ app.use(webpackDevMiddleware(compiler, {
 
 app.use(webpackHotMiddleware(compiler))
 
+// 视图文件
 app.use(express.static(path.join(__dirname, 'views')))
+// 路由
 app.get('/', function (req, res) {
   res.sendFile('./views/index.html')
 })
+
+// api  /v1.0.0/user/..
+// app.use('/v1.0.0/user', userApi);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
